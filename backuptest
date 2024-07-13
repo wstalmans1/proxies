@@ -17,12 +17,20 @@ describe("Proxy", function () {
   }
 
   it("Should work with logic1", async function () {
-    const { lock, unlockTime } = await loadFixture(deployFixture);
+    const { proxy, logic1 } = await loadFixture(deployFixture);
+
+    await proxy.changeImplementation(logic1.address);
+
+    assert.equal(await logic1.x(), 0);
+
+    await proxy.changeX(52);
+
+    assert.equal(await logic1.x(), 52);
 
   });
 
-  it("Should work with upgrades", async function () {
-    const { lock, owner } = await loadFixture(deployFixture);
+  //it("Should work with upgrades", async function () {
+  //  const { lock, owner } = await loadFixture(deployFixture);
 
-  });
+  //});
 });
